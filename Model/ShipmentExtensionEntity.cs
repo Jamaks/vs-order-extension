@@ -31,8 +31,8 @@ namespace OrderExtension.Web.Model
         public override OperationEntity FromModel(OrderOperation shipment, PrimaryKeyResolvingMap pkMap)
         {
             base.FromModel(shipment, pkMap);
-
-            var shipment2 = shipment as ShipmentExtension;
+            ShipmentExtension shipment2= new ShipmentExtension();
+            shipment2 =(ShipmentExtension) shipment;
             this.IsCommercial = shipment2.IsCommercial;
             this.HasLoadingDock = shipment2.HasLoadingDock;
             this.shipmentDate = shipment2.shipmentDate;

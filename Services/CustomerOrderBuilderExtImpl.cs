@@ -40,6 +40,7 @@ namespace OrderExtension.Web.Services {
             {
                 shipment2.HasLoadingDock = shipment2.HasLoadingDock;
                 shipment2.IsCommercial = shipment2.IsCommercial;
+                shipment2.shipmentDate = shipment2.shipmentDate;
                 shipment2.Comment = shipment2.Comment;
             }
             return shipment2;
