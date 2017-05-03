@@ -54,7 +54,7 @@ namespace OrderExtension.Web
             base.PostInitialize();
 
 
-            AbstractTypeFactory<Shipment>.OverrideType<Shipment, ShipmentExtension>().WithFactory(()=>new Shipment() { OperationType="Shipment"});
+            AbstractTypeFactory<Shipment>.OverrideType<Shipment, ShipmentExtension>().WithFactory(()=>new ShipmentExtension() { OperationType="Shipment"});
             AbstractTypeFactory<ShipmentEntity>.OverrideType<ShipmentEntity, ShipmentExtensionEntity>();
 
             //Thats need for PolymorphicOperationJsonConverter for API deserialization
