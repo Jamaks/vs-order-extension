@@ -24,7 +24,7 @@ using VirtoCommerce.Platform.Core.Settings;
 using VirtoCommerce.Platform.Data.Infrastructure;
 
 namespace OrderExtension.Web.Services {
-    public class CustomerOrderServiceExtImpl : CustomerOrderServiceImpl {
+    public class CustomerOrderServiceExtImpl : CustomerOrderServiceImpl, IOrderShipmentService {
 
         protected ICustomerOrderSearchService _orderSearchService;
 
@@ -132,7 +132,10 @@ namespace OrderExtension.Web.Services {
         }
 
         #endregion
-
+        public GenericSearchResult<CustomerOrder> SearchCustomerOrdersExt(CustomerOrderSearchCriteria criteria)
+        {
+            throw new NotImplementedException();
+        }
 
         protected override void EnsureThatAllOperationsHaveNumber(CustomerOrder order) {
             var store = StoreService.GetById(order.StoreId);
