@@ -1,4 +1,5 @@
-﻿using System;
+﻿using OrderExtension.Web.Model;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
@@ -31,10 +32,12 @@ namespace OrderExtension.Web.Services {
         private ICustomerOrderService _customerOrderService;
         private IStoreService _storeService;
         private IEventPublisher<OrderChangeEvent> _orderChangingPublisher;
-        public CustomerOrderServiceExtImpl(Func<IOrderRepository> orderRepositoryFactory, IUniqueNumberGenerator uniqueNumberGenerator, IEventPublisher<OrderChangeEvent> orderChangingPublisher, IDynamicPropertyService dynamicPropertyService, IShippingMethodsService shippingMethodsService, IPaymentMethodsService paymentMethodsService, IStoreService storeService, IChangeLogService changeLogService, IEventPublisher<OrderChangedEvent> orderChangedPublisher)
-            :base(orderRepositoryFactory, uniqueNumberGenerator, orderChangingPublisher, dynamicPropertyService, shippingMethodsService, paymentMethodsService, storeService, changeLogService, orderChangedPublisher)
+        private Func<IOrderExtensionRepository> _orderRepositoryFactoryEx;
+        public CustomerOrderServiceExtImpl(Func<IOrderExtensionRepository> orderRepositoryFactoryEx, IUniqueNumberGenerator uniqueNumberGenerator, IEventPublisher<OrderChangeEvent> orderChangingPublisher, IDynamicPropertyService dynamicPropertyService, IShippingMethodsService shippingMethodsService, IPaymentMethodsService paymentMethodsService, IStoreService storeService, IChangeLogService changeLogService, IEventPublisher<OrderChangedEvent> orderChangedPublisher)
+            :base(orderRepositoryFactoryEx, uniqueNumberGenerator, orderChangingPublisher, dynamicPropertyService, shippingMethodsService, paymentMethodsService, storeService, changeLogService, orderChangedPublisher)
         {
             _orderChangingPublisher = orderChangingPublisher;
+            _orderRepositoryFactoryEx = orderRepositoryFactoryEx;
         }
         #region ICustomerOrderService Members
 
@@ -136,15 +139,17 @@ namespace OrderExtension.Web.Services {
         {
             var retVal = new GenericSearchResult<CustomerOrder>();
 
-            using (var repository = RepositoryFactory())
+            using (var repository = _orderRepositoryFactoryEx())
             {
 
-                var query = repository.CustomerOrders;
-                var orderIds = query.Select(x => x.Id).Skip(criteria.Skip).Take(criteria.Take).ToArray();
+              //  var query = repository.Shipments;
+               //var query2 = query.Select(x => x.ToModel(AbstractTypeFactory<ShipmentExtension>.TryCreateInstance()));
+               var query3 = repository.ShipmentExtended;
+                var orderIds = query3.Select(x => x.CustomerOrderId).ToArray();
                 var orders = GetByIds(orderIds, criteria.ResponseGroup);
                 retVal.Results = orders.AsQueryable<CustomerOrder>().ToList();
-
-                throw new NotImplementedException();
+                return retVal;
+                //throw new NotImplementedException();
             }
         }
 

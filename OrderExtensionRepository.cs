@@ -4,13 +4,14 @@ using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
 using System.Web;
+using VirtoCommerce.Domain.Order.Model;
 using VirtoCommerce.OrderModule.Data.Model;
 using VirtoCommerce.OrderModule.Data.Repositories;
 using VirtoCommerce.Platform.Data.Infrastructure.Interceptors;
 
 namespace OrderExtension.Web
 {
-    public class OrderExtensionRepository : OrderRepositoryImpl
+    public class OrderExtensionRepository : OrderRepositoryImpl, IOrderExtensionRepository
     {
         public OrderExtensionRepository()
         {
@@ -32,7 +33,6 @@ namespace OrderExtension.Web
 
             base.OnModelCreating(modelBuilder);
         }
-
 
         public IQueryable<ShipmentExtensionEntity> ShipmentExtended
         {

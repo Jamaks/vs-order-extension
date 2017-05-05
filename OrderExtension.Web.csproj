@@ -143,7 +143,6 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Global.asax" />
     <Content Include="packages.config" />
     <Content Include="module.manifest" />
     <None Include="Properties\PublishProfiles\test.pubxml" />
@@ -163,9 +162,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Controllers\Api\DeliveryModuleController.cs" />
-    <Compile Include="Global.asax.cs">
-      <DependentUpon>Global.asax</DependentUpon>
-    </Compile>
+    <Compile Include="IOrderExtensionRepository.cs" />
     <Compile Include="Migrations\201704181146230_Init.cs" />
     <Compile Include="Migrations\201704181146230_Init.Designer.cs">
       <DependentUpon>201704181146230_Init.cs</DependentUpon>
