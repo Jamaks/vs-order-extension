@@ -46,7 +46,7 @@ namespace OrderExtension.Web
             _container.RegisterType<IOrderRepository>(new InjectionFactory(c => new OrderExtensionRepository(_connectionStringName, _container.Resolve<AuditableInterceptor>(), new EntityPrimaryKeyGeneratorInterceptor())));
             //Override ICustomerOrderBuilder default implementation
             _container.RegisterType<ICustomerOrderBuilder, CustomerOrderBuilderExtImpl>();
-           // _container.RegisterType<ICustomerOrderService, CustomerOrderServiceExtImpl>();
+            _container.RegisterType<IOrderShipmentService, CustomerOrderServiceExtImpl>();
 
         }
 

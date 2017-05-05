@@ -134,7 +134,18 @@ namespace OrderExtension.Web.Services {
         #endregion
         public GenericSearchResult<CustomerOrder> SearchCustomerOrdersExt(CustomerOrderSearchCriteria criteria)
         {
-            throw new NotImplementedException();
+            var retVal = new GenericSearchResult<CustomerOrder>();
+
+            using (var repository = RepositoryFactory())
+            {
+
+                var query = repository.CustomerOrders;
+                var orderIds = query.Select(x => x.Id).Skip(criteria.Skip).Take(criteria.Take).ToArray();
+                var orders = GetByIds(orderIds, criteria.ResponseGroup);
+                retVal.Results = orders.AsQueryable<CustomerOrder>().ToList();
+
+                throw new NotImplementedException();
+            }
         }
 
         protected override void EnsureThatAllOperationsHaveNumber(CustomerOrder order) {
