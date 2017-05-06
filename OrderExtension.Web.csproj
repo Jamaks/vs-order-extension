@@ -154,9 +154,12 @@
     </None>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Scripts\blades\shipmentsList.js" />
+    <Content Include="Scripts\blades\shipmentsList.tpl.html" />
     <Content Include="Scripts\blades\invoice-detail.js" />
     <Content Include="Scripts\blades\invoice-detail.tpl.html" />
     <Content Include="Scripts\order2.js" />
+    <Content Include="Scripts\ShipmentModule.js" />
     <Content Include="Scripts\tree-template.html" />
     <Content Include="Web.config" />
   </ItemGroup>
