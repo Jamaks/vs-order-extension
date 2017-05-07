@@ -21,8 +21,9 @@ var ShipmentModule= angular.module(moduleName, [
 								id: 'shipmentsList',
 								// controller name must be unique in Application. Use prefix like 'um-'.
 								controller: 'Jamak.ShipmentModule.shipmentsListController',
-								template: 'Modules/Order.Shipment/Scripts/blades/shipmentsList.tpl.html',
-								isClosingDisabled: true
+								template: 'Modules/OrderExtension/Scripts/blades/shipmentsList.tpl.html',
+								isClosingDisabled: true,
+								isExpandable: true,
 							};
 							bladeNavigationService.showBlade(blade);
 						}

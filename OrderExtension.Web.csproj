@@ -146,6 +146,7 @@
     <Content Include="packages.config" />
     <Content Include="module.manifest" />
     <None Include="Properties\PublishProfiles\test.pubxml" />
+    <None Include="Properties\PublishProfiles\toPlatform.pubxml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

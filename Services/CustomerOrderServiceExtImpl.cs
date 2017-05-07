@@ -144,7 +144,8 @@ namespace OrderExtension.Web.Services {
 
               //  var query = repository.Shipments;
                //var query2 = query.Select(x => x.ToModel(AbstractTypeFactory<ShipmentExtension>.TryCreateInstance()));
-               var query3 = repository.ShipmentExtended;
+               var query3 = repository.ShipmentExtended.Where(s=>s.IsApproved==true);
+
                 var orderIds = query3.Select(x => x.CustomerOrderId).ToArray();
                 var orders = GetByIds(orderIds, criteria.ResponseGroup);
                 retVal.Results = orders.AsQueryable<CustomerOrder>().ToList();
