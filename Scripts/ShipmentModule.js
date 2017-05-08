@@ -1,7 +1,7 @@
 ﻿//Call this to register our module to main application
 var moduleName = "Jamak.ShipmentModule";
 
-if (AppDependencies != undefined) {
+if (AppDependencies !== undefined) {
 	AppDependencies.push(moduleName);
 }
 
@@ -11,30 +11,32 @@ var ShipmentModule= angular.module(moduleName, [
 .config(
 	['$stateProvider',
 		function ($stateProvider) {
-			$stateProvider
+		    $stateProvider
 				.state('workspace.shipment', {
-					url: '/shipment',
-					templateUrl: 'Scripts/common/templates/home.tpl.html',
-					controller: [
+				    url: '/shipment',
+				    templateUrl: 'Scripts/common/templates/home.tpl.html',
+				    controller: [
 						'$scope', 'platformWebApp.bladeNavigationService', function ($scope, bladeNavigationService) {
-							var blade = {
-								id: 'shipmentsList',
-								// controller name must be unique in Application. Use prefix like 'um-'.
-								controller: 'Jamak.ShipmentModule.shipmentsListController',
-								template: 'Modules/OrderExtension/Scripts/blades/shipmentsList.tpl.html',
-								isClosingDisabled: true,
-								isExpandable: true,
-							};
-							bladeNavigationService.showBlade(blade);
+						    var blade = {
+						        id: 'shipmentsList',
+						        // controller name must be unique in Application. Use prefix like 'um-'.
+						        controller: 'Jamak.ShipmentModule.shipmentsListController',
+						        template: 'Modules/OrderExtension/Scripts/blades/shipmentsList.tpl.html',
+						        isClosingDisabled: true,
+						        isExpandable: true,
+						    };
+						    bladeNavigationService.showBlade(blade);
 						}
-					]
+				    ]
 				});
+
 		}
 	]
 )
+
 .run(
-	['$rootScope', 'platformWebApp.mainMenuService','$state', function ($rootScope, mainMenuService,$state) {
- var menuItem = {
+	['$rootScope', 'platformWebApp.mainMenuService', '$state', 'platformWebApp.bladeNavigationService', function ($rootScope, mainMenuService, $state, bladeNavigationService) {
+        var menuItem = {
             path: 'browse/shipment',
             icon: 'fa fa-truck',
             title: 'Shipment',
@@ -43,5 +45,8 @@ var ShipmentModule= angular.module(moduleName, [
             permission: 'order:access'
         };
         mainMenuService.addMenuItem(menuItem);
+        
+
+
 	}])
 

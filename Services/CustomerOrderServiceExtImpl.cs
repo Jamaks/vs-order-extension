@@ -141,16 +141,73 @@ namespace OrderExtension.Web.Services {
 
             using (var repository = _orderRepositoryFactoryEx())
             {
+                var query = repository.CustomerOrders;
 
-              //  var query = repository.Shipments;
-               //var query2 = query.Select(x => x.ToModel(AbstractTypeFactory<ShipmentExtension>.TryCreateInstance()));
-               var query3 = repository.ShipmentExtended.Where(s=>s.IsApproved==true);
+                var queryShipment = repository.ShipmentExtended.Where(s => s.IsApproved == true);
+                var orderIds = queryShipment.Select(x => x.CustomerOrderId).ToArray();
+                query = query.Where(x => orderIds.Contains(x.Id));
 
-                var orderIds = query3.Select(x => x.CustomerOrderId).ToArray();
-                var orders = GetByIds(orderIds, criteria.ResponseGroup);
-                retVal.Results = orders.AsQueryable<CustomerOrder>().ToList();
+                //by default does not return prototypes
+                if (!criteria.WithPrototypes)
+                {
+                    query = query.Where(x => !x.IsPrototype);
+                }
+                if (!criteria.Numbers.IsNullOrEmpty())
+                {
+                    query = query.Where(x => criteria.Numbers.Contains(x.Number));
+                }
+                else if (!string.IsNullOrEmpty(criteria.Keyword))
+                {
+                    query = query.Where(x => x.Number.Contains(criteria.Keyword) || x.CustomerName.Contains(criteria.Keyword));
+                }
+                if (criteria.OnlyRecurring)
+                {
+                    query = query.Where(x => x.SubscriptionId != null);
+                }
+                if (!criteria.SubscriptionIds.IsNullOrEmpty())
+                {
+                    query = query.Where(x => criteria.SubscriptionIds.Contains(x.SubscriptionId));
+                }
+                if (criteria.CustomerId != null)
+                {
+                    query = query.Where(x => x.CustomerId == criteria.CustomerId);
+                }
+                if (criteria.Statuses != null && criteria.Statuses.Any())
+                {
+                    query = query.Where(x => criteria.Statuses.Contains(x.Status));
+                }
+                if (criteria.StoreIds != null && criteria.StoreIds.Any())
+                {
+                    query = query.Where(x => criteria.StoreIds.Contains(x.StoreId));
+                }
+                if (criteria.EmployeeId != null)
+                {
+                    query = query.Where(x => x.EmployeeId == criteria.EmployeeId);
+                }
+                if (criteria.StartDate != null)
+                {
+                    query = query.Where(x => x.CreatedDate >= criteria.StartDate);
+                }
+
+                if (criteria.EndDate != null)
+                {
+                    query = query.Where(x => x.CreatedDate <= criteria.EndDate);
+                }
+
+                var sortInfos = criteria.SortInfos;
+                if (sortInfos.IsNullOrEmpty())
+                {
+                    sortInfos = new[] { new SortInfo { SortColumn = ReflectionUtility.GetPropertyName<CustomerOrderEntity>(x => x.CreatedDate), SortDirection = SortDirection.Descending } };
+                }
+                query = query.OrderBySortInfos(sortInfos);
+
+                retVal.TotalCount = query.Count();
+
+                var orderCustomerIds = query.Select(x => x.Id).Skip(criteria.Skip).Take(criteria.Take).ToArray();
+                var orders = GetByIds(orderCustomerIds, criteria.ResponseGroup);
+                retVal.Results = orders.AsQueryable<CustomerOrder>().OrderBySortInfos(sortInfos).ToList();
+               
                 return retVal;
-                //throw new NotImplementedException();
             }
         }
 

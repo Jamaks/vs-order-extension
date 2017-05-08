@@ -1,0 +1,248 @@
+﻿
+<div class="blade-content __medium-wide">
+    <div class="blade-inner">
+        <div class="inner-block">
+            <form class="form" name="detailForm">
+                
+                <div ng-init="setForm(detailForm)">
+                
+                    <div class="form-input">
+                        <label class="form-label" style="height:27px;">
+                            Customer
+                            <a href="" ng-click="blade.openCustomerDetails()">{{ blade.customerOrder.customerName }}</a>
+                        </label>
+                    </div>
+                    <div ng-repeat="shipment in blade.customerOrder.shipments">
+                        <h4>{{shipment.number}}</h4>
+                        
+                        <div class="form-input">
+                            <label class="form-label">
+                                isApproved
+                            </label>
+                            {{ shipment.isApproved }} 
+                        </div>
+                        <label class="form-label">
+                            {{ 'orders.blades.customerOrder-detail.labels.status' | translate }}
+                            <!--<a href="" ng-click="blade.openStatusSettingManagement()" class="form-edit"><i class="form-ico fa fa-pencil"></i></a>-->
+                        </label>
+                        <div class="form-input">
+                            <ui-select ng-model="shipments.status" ng-disabled="blade.isLocked">
+                                <ui-select-match placeholder="{{ 'orders.blades.customerOrder-detail.placeholders.status' | translate }}">{{$select.selected}}</ui-select-match>
+                                <ui-select-choices repeat="x as x in blade.shipmentStatuses | filter: $select.search ">
+                                    <span ng-bind-html="x | highlight: $select.search"></span>
+                                </ui-select-choices>
+                            </ui-select>
+                        </div>
+                        <div class="form-input">
+                            <label class="form-label">
+                                Comment
+                            </label>
+                            <p>{{ shipment.comment }} </p>
+                        </div>
+                        <div class="form-input">
+                            <label class="form-label">
+                                createdDate
+                            </label>
+                            {{ shipment.createdDate |date:'yyyy-MM-dd HH:mm:ss Z' }} 
+                        </div>
+                        <div class="form-input">
+                            <label class="form-label">
+                                shipmentDate
+                            </label>
+                           {{ shipment.shipmentDate|date:'yyyy-MM-dd HH:mm:ss Z' }} 
+                        </div>
+                        <div class="form-input">
+                            <label class="form-label">
+                                price
+                            </label>
+                            {{ shipment.price }} 
+                        </div>
+
+                        <div class="form-input">
+                            <label class="form-label">
+                                priceWithTax
+                            </label>
+                            {{ shipment.priceWithTax }}
+                        </div>
+                        <div class="form-input">
+                            <label class="form-label">
+                                total
+                            </label>
+                            {{ shipment.total }}
+                        </div>
+                        <div class="form-input">
+                            <label class="form-label">
+                                totalWithTax
+                            </label>
+                            {{ shipment.totalWithTax }} 
+                        </div>
+                    </div>
+                   
+
+                </div>
+
+                <va-metaform registered-inputs="blade.metaFields" blade="blade"></va-metaform>
+
+            </form>
+            <form name="orderForm" novalidate></form>
+            <div class="table-wrapper">
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th class="table-col __product-control">
+                                <!--<label class="form-control __checkbox">
+                                    <input type="checkbox" ng-model="blade.selectedAll" ng-change="checkAll(blade.selectedAll)" />
+                                    <span class="check"></span>
+                                </label>-->
+                            </th>
+                            <th class="table-col __proudct-img">{{ 'orders.blades.customerOrder-items.labels.item' | translate }}</th>
+                            <th class="table-col">{{ 'orders.blades.customerOrder-items.labels.quantity' | translate }}</th>
+                            <th class="table-col">{{ 'orders.blades.customerOrder-items.labels.available' | translate }}</th>
+                            <th class="table-col">{{ 'orders.blades.customerOrder-items.labels.price' | translate }}</th>
+                            <th class="table-col">{{ 'orders.blades.customerOrder-items.labels.priceWithTax' | translate }}</th>
+                            <th class="table-col">{{ 'orders.blades.customerOrder-items.labels.discount' | translate }}</th>
+                            <th class="table-col">{{ 'orders.blades.customerOrder-items.labels.discountWithTax' | translate }}</th>
+                            <th class="table-col">{{ 'orders.blades.customerOrder-items.labels.tax' | translate }}</th>
+                            <th class="table-col">{{ 'orders.blades.customerOrder-items.labels.total' | translate }}</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr class="table-item" ng-repeat-start="data in blade.currentEntity.items" >
+                            <td class="table-col">
+                                <!--<label class="form-control __checkbox">
+                                    <input type="checkbox" ng-model="data.selected">
+                                    <span class="check"></span>
+                                </label>
+                                <a class="clear text-mini __link" ng-click="openItemDynamicProperties(data)">{{ 'orders.blades.customerOrder-items.labels.dynamic-properties' | translate }}</a>-->
+                            </td>
+                            <td class="table-col">
+                                <div class="product-img">
+                                    <div class="image" style="background-image: url({{data.imageUrl}})" ng-if="data.imageUrl" ng-click="openItemDetail(data)"></div>
+                                    <i class="table-ico fa fa-image" ng-if="!data.imageUrl" />
+                                </div>
+
+                            </td>
+                            <td class="table-col">
+                                <div class="form-input __mini __inline">
+                                    <div class="form-input __mini __number">
+                                        {{data.quantity}}
+                                        <!--<input smart-float num-type="integer" required ng-model="data.quantity" ng-model-options="{ updateOn: 'blur' }" ng-change="blade.recalculateFn()" id="quantity{{$index}}" focus-on="quantity{{$index}}">-->
+                                    </div>
+                                </div>
+                            </td>
+                            <td class="table-col">
+                                <span ng-class="{'error': data.avail <= 0}">{{data.avail || 0}}</span>
+                            </td>
+                            <td class="table-col">
+                                <div class="form-input __mini">
+                                    {{data.price}}
+                                    <!--<input money required ng-model="data.price" ng-model-options="{ updateOn: 'blur' }" ng-change="blade.recalculateFn()" id="price{{$index}}" focus-on="price{{$index}}">-->
+                                </div>
+                            </td>
+                            <td class="table-col">
+                                <span class="list-price">{{data.priceWithTax | number:2}}</span>
+                            </td>
+                            <td class="table-col">
+                                <div class="form-input __mini __inline">
+                                    {{data.discountAmount}}
+                                    <!--<input money required ng-model="data.discountAmount" ng-model-options="{ updateOn: 'blur' }" ng-change="blade.recalculateFn()" id="discountAmount{{$index}}" focus-on="discountAmount{{$index}}">-->
+                                </div>
+                            </td>
+                            <td class="table-col">
+                                <span class="list-price">{{data.discountAmountWithTax | number:2}}</span>
+                            </td>
+                            <td class="table-col">
+                                <span class="list-price">{{data.taxTotal | number:2}}</span>
+                            </td>
+                            <td class="table-col __total">
+                                <span class="list-price">{{data.extendedPriceWithTax | number:2 }}</span>
+                            </td>
+
+                        </tr>
+                        <tr ng-repeat-end class="table-item" ng-class="{'__selected': $index === blade.selectedNodeId}" ng-click='blade.selectedNodeId = $index'>
+                            <td class="table-head" colspan="10" ng-click="openItemDetail(data)">
+                                {{data.name}}
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+                <div ng-if="pageSettings.itemsPerPageCount < pageSettings.totalItems" ng-include="'pagerTemplate.html'"></div>
+            </div>
+            <div class="table-wrapper">
+                <table class="table __collapsed __order-info">
+                    <tr class="table-item">
+                        <td class="table-col">{{ 'orders.blades.customerOrder-items.labels.sub-total' | translate }}</td>
+                        <td class="table-col __price">{{blade.currentEntity.subTotal | number:2}}&nbsp;{{blade.currentEntity.currency}}</td>
+                    </tr>
+                    <tr class="table-item">
+                        <td class="table-col">{{ 'orders.blades.customerOrder-items.labels.discount-total' | translate }}</td>
+                        <td class="table-col __price">{{blade.currentEntity.subTotalDiscount | number:2}}&nbsp;{{blade.currentEntity.currency}}</td>
+                    </tr>
+                    <tr class="table-item">
+                        <td class="table-col">{{ 'orders.blades.customerOrder-items.labels.tax-total' | translate }}</td>
+                        <td class="table-col __price">{{ blade.currentEntity.subTotalTaxTotal | number:2}}&nbsp;{{blade.currentEntity.currency}}</td>
+                    </tr>
+                    <tr class="table-item __total">
+                        <td class="table-col">{{ 'orders.blades.customerOrder-items.labels.total' | translate }}</td>
+                        <td class="table-col __price">{{ (blade.currentEntity.subTotalWithTax - blade.currentEntity.subTotalDiscountWithTax) | number:2}}&nbsp;{{blade.currentEntity.currency}}</td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+<script type="text/ng-template" id="order-employeeSelector.html">
+    <div class="form-input">
+        <ui-select ng-model="blade.customerOrder.employeeId" ng-change="blade.customerOrder.employeeName = $select.selected ? $select.selected.fullName : undefined" ng-disabled="blade.isLocked">
+            <ui-select-match allow-clear placeholder="{{ 'orders.blades.customerOrder-detail.placeholders.employee' | translate }}">{{$select.selected.fullName}}</ui-select-match>
+            <ui-select-choices repeat="x.id as x in blade.employees | filter: { fullName: $select.search }">
+                <span ng-bind-html="x.fullName | highlight: $select.search"></span>
+            </ui-select-choices>
+        </ui-select>
+    </div>
+</script>
+
+<script type="text/ng-template" id="statusSelector.html">
+    <label class="form-label">
+        {{ 'orders.blades.customerOrder-detail.labels.status' | translate }}
+        <!--<a href="" ng-click="blade.openStatusSettingManagement()" class="form-edit"><i class="form-ico fa fa-pencil"></i></a>-->
+    </label>
+    <div class="form-input">
+        <ui-select ng-model="blade.customerOrder.shipments[0].status" ng-disabled="blade.isLocked">
+            <ui-select-match placeholder="{{ 'orders.blades.customerOrder-detail.placeholders.status' | translate }}">{{$select.selected}}</ui-select-match>
+            <ui-select-choices repeat="x as x in blade.shipmentStatuses | filter: $select.search ">
+                <span ng-bind-html="x | highlight: $select.search"></span>
+            </ui-select-choices>
+        </ui-select>
+    </div>
+</script>
+
+<script type="text/ng-template" id="customerSelector.html">
+    <div class="form-input">
+        <label class="form-label" style="height:27px;">
+            <a href="" ng-click="blade.openCustomerDetails()">{{ blade.customerOrder.customerName }}</a>
+        </label>
+    </div>
+</script>
+
+<script type="text/ng-template" id="discountAmount.html">
+    <div class="form-input">
+        <input money required ng-model="blade.currentEntity.discountAmount" ng-model-options="{ updateOn: 'blur' }" ng-change="blade.recalculate()" id="discountAmount" focus-on="discountAmount">
+    </div>
+</script>
+<script type="text/ng-template" id="discountAmountWithTax.html">
+    <div class="form-input">
+        <input money required ng-model="blade.currentEntity.discountAmountWithTax" ng-model-options="{ updateOn: 'blur' }" ng-change="blade.recalculate()" id="discountAmountWithTax" focus-on="discountAmountWithTax">
+    </div>
+</script>
+
+<script type="text/ng-template" id="storeSelector.html">
+    <div class="form-input">
+        <ui-select ng-model="blade.currentEntity.storeId" ng-disabled="blade.isLocked">
+            <ui-select-match placeholder="{{ 'orders.blades.customerOrder-detail.placeholders.store' | translate }}">{{$select.selected.name}}</ui-select-match>
+            <ui-select-choices repeat="store.id as store in blade.stores | filter: { name: $select.search }">
+                <span ng-bind-html="store.name | highlight: $select.search"></span>
+            </ui-select-choices>
+        </ui-select>
+    </div>
+</script>

@@ -147,6 +147,7 @@
     <Content Include="module.manifest" />
     <None Include="Properties\PublishProfiles\test.pubxml" />
     <None Include="Properties\PublishProfiles\toPlatform.pubxml" />
+    <Content Include="Scripts\blades\shipmentDetail.tpl.html" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -155,6 +156,7 @@
     </None>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Scripts\blades\shipmentDetail.js" />
     <Content Include="Scripts\blades\shipmentsList.js" />
     <Content Include="Scripts\blades\shipmentsList.tpl.html" />
     <Content Include="Scripts\blades\invoice-detail.js" />
