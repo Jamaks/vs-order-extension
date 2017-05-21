@@ -29,6 +29,10 @@ namespace OrderExtension.Web
             modelBuilder.Entity<ShipmentExtensionEntity>().HasKey(x => x.Id)
                 .Property(x => x.Id);
             modelBuilder.Entity<ShipmentExtensionEntity>().ToTable("OrderShipmentExtension");
+
+            modelBuilder.Entity<CartShipmentExtensionEntity>().HasKey(x => x.Id)
+            .Property(x => x.Id);
+            modelBuilder.Entity<CartShipmentExtensionEntity>().ToTable("CartShipmentExtension");
             #endregion
 
             base.OnModelCreating(modelBuilder);
@@ -39,7 +43,9 @@ namespace OrderExtension.Web
             get { return GetAsQueryable<ShipmentExtensionEntity>(); }
         }
 
-
-
+        public IQueryable<CartShipmentExtensionEntity> CartShipmentExtended
+        {
+            get { return GetAsQueryable<CartShipmentExtensionEntity>(); }
+        }
     }
 }

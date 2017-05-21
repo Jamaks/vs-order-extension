@@ -11,5 +11,7 @@ namespace OrderExtension.Web
     public interface IOrderExtensionRepository: IOrderRepository
     {
         IQueryable<ShipmentExtensionEntity> ShipmentExtended { get;  }
+        IQueryable<CartShipmentExtensionEntity> CartShipmentExtended { get; }
+
     }
 }
