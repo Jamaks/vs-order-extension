@@ -4,14 +4,12 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using VirtoCommerce.OrderModule.Data.Repositories;
+using VirtoCommerce.CartModule.Data.Repositories;
 
 namespace OrderExtension.Web
 {
-    public interface IOrderExtensionRepository: IOrderRepository
+    public interface IShopCartExtensionRepository: ICartRepository
     {
-        IQueryable<ShipmentExtensionEntity> ShipmentExtended { get;  }
-        
-
+        IQueryable<CartShipmentExtensionEntity> CartShipmentExtended { get; }
     }
 }

@@ -173,12 +173,14 @@
   <ItemGroup>
     <Compile Include="Controllers\Api\DeliveryModuleController.cs" />
     <Compile Include="IOrderExtensionRepository.cs" />
+    <Compile Include="IShopCartExtensionRepository.cs" />
     <Compile Include="Migrations\201704181146230_Init.cs" />
     <Compile Include="Migrations\201704181146230_Init.Designer.cs">
       <DependentUpon>201704181146230_Init.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
-    <Compile Include="Model\CartExtension.cs" />
+    <Compile Include="Model\CartShipmentExtension.cs" />
+    <Compile Include="Model\CartShipmentExtensionEntity.cs" />
     <Compile Include="Model\ShipmentExtension.cs" />
     <Compile Include="Model\ShipmentExtensionEntity.cs" />
     <Compile Include="Module.cs" />
@@ -187,6 +189,7 @@
     <Compile Include="Services\CustomerOrderBuilderExtImpl.cs" />
     <Compile Include="Services\CustomerOrderServiceExtImpl.cs" />
     <Compile Include="Services\IOrderShipmentService.cs" />
+    <Compile Include="ShopCartExtensionRepository.cs" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Migrations\201704181146230_Init.resx">
