@@ -1,0 +1,34 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<module>
+  <id>CartExtension</id>
+  <version>1.0.0</version>
+  <platformVersion>2.12.2</platformVersion>
+  <dependencies>
+    <dependency id="VirtoCommerce.Core" version="2.17.0" />
+    <dependency id="VirtoCommerce.Orders" version="2.13.2" />
+  </dependencies>
+
+  <title>Cart extension shibstation module</title>
+  <description>Demo</description>
+  <authors>
+    <author>Jamak</author>
+  </authors>
+  <owners>
+    <owner>Virto Commerce</owner>
+  </owners>
+  <projectUrl>http://virtocommerce.com/</projectUrl>
+  <iconUrl>Modules/$(VirtoCommerce.Orders)/Content/logo.png</iconUrl>
+  <releaseNotes>First version.</releaseNotes>
+  <copyright>Copyright © 2011-2016 Virto Commerce. All rights reserved</copyright>
+  <tags>orders</tags>
+
+  <assemblyFile>CartExtModule.dll</assemblyFile>
+  <moduleType>CartExtModule.Module, CartExtModule</moduleType>
+
+
+
+
+  <permissions>
+
+  </permissions>
+</module>

@@ -1,4 +1,4 @@
-﻿using OrderExtension.Web.Model;
+﻿using CartExtModule.Model;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -6,7 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using VirtoCommerce.CartModule.Data.Repositories;
 
-namespace OrderExtension.Web
+namespace CartExtModule
 {
     public interface IShopCartExtensionRepository: ICartRepository
     {

@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 using VirtoCommerce.CartModule.Data.Model;
 using VirtoCommerce.Domain.Cart.Model;
 
-namespace OrderExtension.Web.Model
+namespace CartExtModule.Model
 {
     public class CartShipmentExtension: Shipment
     {

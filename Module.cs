@@ -39,6 +39,7 @@ namespace OrderExtension.Web
             }
 
 
+
         }
         public override void Initialize()
         {
@@ -46,7 +47,7 @@ namespace OrderExtension.Web
 
             _container.RegisterType<IOrderRepository>(new InjectionFactory(c => new OrderExtensionRepository(_connectionStringName, _container.Resolve<AuditableInterceptor>(), new EntityPrimaryKeyGeneratorInterceptor())));
             _container.RegisterType<IOrderExtensionRepository>(new InjectionFactory(c => new OrderExtensionRepository(_connectionStringName, _container.Resolve<AuditableInterceptor>(), new EntityPrimaryKeyGeneratorInterceptor())));
-            _container.RegisterType<ICartRepository>(new InjectionFactory(c => new ShopCartExtensionRepository(_connectionStringName, _container.Resolve<AuditableInterceptor>(), new EntityPrimaryKeyGeneratorInterceptor())));
+            //_container.RegisterType<ICartRepository>(new InjectionFactory(c => new ShopCartExtensionRepository(_connectionStringName, _container.Resolve<AuditableInterceptor>(), new EntityPrimaryKeyGeneratorInterceptor())));
             //Override ICustomerOrderBuilder default implementation
             _container.RegisterType<ICustomerOrderBuilder, CustomerOrderBuilderExtImpl>();
             _container.RegisterType<IOrderShipmentService, CustomerOrderServiceExtImpl>();
@@ -61,6 +62,8 @@ namespace OrderExtension.Web
             AbstractTypeFactory<Shipment>.OverrideType<Shipment, ShipmentExtension>().WithFactory(()=>new ShipmentExtension() { OperationType="Shipment"});
             AbstractTypeFactory<ShipmentEntity>.OverrideType<ShipmentEntity, ShipmentExtensionEntity>();
 
+            //AbstractTypeFactory<VirtoCommerce.Domain.Cart.Model.Shipment>.OverrideType<VirtoCommerce.Domain.Cart.Model.Shipment, CartShipmentExtension>();
+            //AbstractTypeFactory<VirtoCommerce.CartModule.Data.Model.ShipmentEntity>.OverrideType<VirtoCommerce.CartModule.Data.Model.ShipmentEntity, CartShipmentExtensionEntity>();
             //Thats need for PolymorphicOperationJsonConverter for API deserialization
             AbstractTypeFactory<IOperation>.RegisterType<ShipmentExtension>();
         }

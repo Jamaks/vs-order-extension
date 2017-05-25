@@ -30,6 +30,8 @@ namespace OrderExtension.Web
                 .Property(x => x.Id);
             modelBuilder.Entity<ShipmentExtensionEntity>().ToTable("OrderShipmentExtension");
 
+           // modelBuilder.Entity<CartShipmentExtensionEntity>().ToTable("CartShipmentExtension2").HasKey(x => x.Id)
+           //.Property(x => x.Id);
             #endregion
 
             base.OnModelCreating(modelBuilder);

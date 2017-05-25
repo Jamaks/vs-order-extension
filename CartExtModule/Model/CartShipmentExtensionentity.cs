@@ -7,7 +7,7 @@ using VirtoCommerce.Domain.Cart.Model;
 using VirtoCommerce.CartModule.Data.Model;
 using VirtoCommerce.Platform.Core.Common;
 
-namespace OrderExtension.Web.Model
+namespace CartExtModule.Model
 {
     public class CartShipmentExtensionEntity: ShipmentEntity
     {
